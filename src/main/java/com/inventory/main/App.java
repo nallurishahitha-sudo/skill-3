@@ -1,7 +1,5 @@
 package com.inventory.main;
 
-import java.util.List;
-
 import com.inventory.dao.ProductDAO;
 import com.inventory.entity.Product;
 
@@ -11,40 +9,25 @@ public class App {
 
         ProductDAO dao = new ProductDAO();
 
-        // Insert Products
-        dao.saveProduct(new Product("Laptop", "Electronics", 80000, 10));
-        dao.saveProduct(new Product("Mouse", "Electronics", 500, 50));
-        dao.saveProduct(new Product("Keyboard", "Electronics", 1500, 30));
-        dao.saveProduct(new Product("Chair", "Furniture", 3000, 20));
-        dao.saveProduct(new Product("Notebook", "Stationery", 50, 100));
+        // Insert products
+        Product p1 = new Product("Laptop", "Gaming Laptop", 75000, 10);
+        Product p2 = new Product("Mouse", "Wireless Mouse", 1200, 50);
 
-        System.out.println("Products inserted successfully");
+        dao.saveProduct(p1);
+        dao.saveProduct(p2);
 
-        // Sorting
-        System.out.println("\nProducts Sorted by Price:");
-        List<Product> sortedProducts = dao.getProductsSortedByPrice();
+        // Retrieve product
+        Product product = dao.getProduct(1);
 
-        for (Product p : sortedProducts) {
-            System.out.println(p.getName() + " - " + p.getPrice());
+        if(product != null) {
+            System.out.println("Product Name: " + product.getName());
+            System.out.println("Price: " + product.getPrice());
         }
 
-        // Pagination
-        System.out.println("\nPagination (First 3 Products):");
-        List<Product> page = dao.getProductsPagination(0, 3);
+        // Update product
+        dao.updateProduct(1, 72000, 8);
 
-        for (Product p : page) {
-            System.out.println(p.getName() + " - " + p.getPrice());
-        }
-
-        // Aggregate Functions
-        dao.getProductStatistics();
-
-        // LIKE Search
-        System.out.println("\nSearch Results:");
-        List<Product> search = dao.searchProduct("Lap");
-
-        for (Product p : search) {
-            System.out.println(p.getName());
-        }
+        // Delete product
+        dao.deleteProduct(2);
     }
 }
